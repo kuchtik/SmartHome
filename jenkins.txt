@@ -1,0 +1,8 @@
+Job name: SMART_HOME
+Freestyle project
+Check GitHub project
+Project url: https://github.com/kuchtik/SmartHome
+Source Code Management: Git
+Repository URL: https://github.com/kuchtik/SmartHome
+Credentials: kuchtik/***********
+Branch Specifier: */master
