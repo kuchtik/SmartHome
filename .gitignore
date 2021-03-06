@@ -5,6 +5,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+/package.json
+/package-lock.json
+/webpack.config.js
+/webpack.generated.js
+
 ### STS ###
 .apt_generated
 .classpath

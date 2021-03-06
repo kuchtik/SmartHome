@@ -1,0 +1,34 @@
+Install Raspberry OS to SD card
+
+Username: pi
+Password: raspberry
+
+sudo raspi-config
+
+Set WiFi, password, SSH, hostname, expand drive...
+
+sudo nano /etc/dhcpcd.conf
+
+Uncomment static IP settings (192.168.0.100)
+
+sudo apt update
+sudo apt upgrade
+
+sudo apt install default-jdk
+
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt update
+sudo apt install jenkins
+
+Go to http://raspberry:8080/
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+Set jenkins URL to http://raspberry/jenkins/
+
+sudo nano /etc/default/jenkins
+JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX"
+
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo sh -c "iptables-save > /etc/iptables.rules"
