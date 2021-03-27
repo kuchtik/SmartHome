@@ -6,3 +6,8 @@ Source Code Management: Git
 Repository URL: https://github.com/kuchtik/SmartHome
 Credentials: kuchtik/***********
 Branch Specifier: */master
+
+Script:
+mvn package -DskipTests -Pproduction
+cp target/smarthome*.jar /opt/smart_home/smarthome.jar
+sudo systemctl restart smarthome

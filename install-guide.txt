@@ -34,10 +34,34 @@ JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PRE
 sudo systemctl stop jenkins
 sudo systemctl start jenkins
 
+sudo apt install iptables-persistent
 sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
 sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
 sudo iptables -A PREROUTING -t nat -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 8080
-sudo sh -c "iptables-save > /etc/iptables.rules"
+sudo sh -c "iptables-save > /etc/iptables/rules.v4"
 
 sudo mkdir /opt/smart_home
 sudo chmod 777 /opt/smart_home
+
+sudo nano /etc/systemd/system/smarthome.service
+
+[Unit]
+Description=Smart home service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=jenkins
+ExecStart=/usr/bin/java -jar /opt/smart_home/smarthome.jar
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl enable smarthome
+
+sudo nano /etc/sudoers
+
+jenkins ALL=(ALL) NOPASSWD: ALL
