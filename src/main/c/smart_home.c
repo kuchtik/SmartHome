@@ -7,12 +7,12 @@
 extern "C" {
 #endif
 
-JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise(JNIEnv * env, jobject thisObject);
-JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate(JNIEnv * env, jobject thisObject);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise     (JNIEnv * env, jobject thisObject);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate      (JNIEnv * env, jobject thisObject);
 JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject);
-JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity(JNIEnv * env, jobject thisObject);
-JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSound(JNIEnv * env, jobject thisObject, jdouble duration);
-JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs(JNIEnv * env, jobject thisObject, jint red, jint green, jint blue);
+JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity   (JNIEnv * env, jobject thisObject);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSound      (JNIEnv * env, jobject thisObject, jdouble duration);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs      (JNIEnv * env, jobject thisObject, jint red, jint green, jint blue);
 
 #ifdef __cplusplus
 }
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLED
 
 
 // ******************************************************************************** //
-// ********************     Initialization and termination     ******************** //
+// ********************     Initialisation and termination     ******************** //
 // ******************************************************************************** //
 
 JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise(JNIEnv * env, jobject thisObject) {

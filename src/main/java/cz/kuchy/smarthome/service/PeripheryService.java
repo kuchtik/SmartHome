@@ -10,11 +10,12 @@ public class PeripheryService {
 
     static {
         System.loadLibrary("smarthome");
+        System.out.println("Loading native library finished");
     }
 
 
     // ******************************************************************************** //
-    // ********************     Initialization and termination     ******************** //
+    // ********************     Initialisation and termination     ******************** //
     // ******************************************************************************** //
 
     public native void initialise();
@@ -23,11 +24,13 @@ public class PeripheryService {
     @PostConstruct
     public void automaticInitialise() {
         initialise();
+        System.out.println("Initialisation finished");
     }
 
     @PreDestroy
     public void automaticTerminate() {
         terminate();
+        System.out.println("Termination finished");
     }
 
 
