@@ -3,6 +3,7 @@ package cz.kuchy.smarthome.service;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class PeripheryService {
@@ -42,7 +43,8 @@ public class PeripheryService {
 
 
     @PostConstruct
-    public void automaticInitialise() {
+    public void automaticInitialise() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(10);
         int result = initialise();
         System.out.println("Initialisation result: " + result);
     }
