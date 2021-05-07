@@ -8,6 +8,5 @@ Credentials: kuchtik/***********
 Branch Specifier: */master
 
 Script:
-mvn package -DskipTests -Pproduction
-cp target/smarthome*.jar /opt/smart_home/smarthome.jar
+bash ./compile.sh
 sudo systemctl restart smarthome
