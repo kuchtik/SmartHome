@@ -55,7 +55,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=jenkins
-ExecStart=sudo /usr/bin/java -Djava.library.path=/opt/smart_home -jar /opt/smart_home/smarthome.jar &>> /opt/smart_home/log.txt
+ExecStart=/usr/bin/java -Djava.library.path=/opt/smart_home -jar /opt/smart_home/smarthome.jar
 
 [Install]
 WantedBy=multi-user.target
