@@ -9,10 +9,10 @@ extern "C" {
 
 JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise     (JNIEnv * env, jobject thisObject);
 JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate      (JNIEnv * env, jobject thisObject);
-//JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject);
-//JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity   (JNIEnv * env, jobject thisObject);
+JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject);
+JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity   (JNIEnv * env, jobject thisObject);
 JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSound      (JNIEnv * env, jobject thisObject, jdouble duration);
-//JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs      (JNIEnv * env, jobject thisObject, jint red, jint green, jint blue);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs      (JNIEnv * env, jobject thisObject, jint red, jint green, jint blue);
 
 #ifdef __cplusplus
 }
@@ -56,17 +56,17 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminat
 // *****************************     DHT11 sensor     ***************************** //
 // ******************************************************************************** //
 
-//JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject) {
-//    double temperature = 0;
-//    printf("Temperature: %f\n", temperature);
-//    return (jdouble) temperature;
-//}
-//
-//JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity(JNIEnv * env, jobject thisObject) {
-//    double humidity = 0;
-//    printf("Humidity: %f\n", humidity);
-//    return (jdouble) humidity;
-//}
+JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject) {
+    double temperature = 0;
+    printf("Temperature: %f\n", temperature);
+    return (jdouble) temperature;
+}
+
+JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity(JNIEnv * env, jobject thisObject) {
+    double humidity = 0;
+    printf("Humidity: %f\n", humidity);
+    return (jdouble) humidity;
+}
 
 
 // ******************************************************************************** //
@@ -85,9 +85,9 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSoun
 // ******************************     LED strip     ******************************* //
 // ******************************************************************************** //
 
-//JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs(JNIEnv * env, jobject thisObject, jint red, jint green, jint blue) {
-//    gpioPWM(GPIO_LED_RED, (int) red);
-//    gpioPWM(GPIO_LED_GREEN, (int) green);
-//    gpioPWM(GPIO_LED_BLUE, (int) blue);
-//    printf("LEDs lighted - red %d, green %d, blue %d\n", (int) red, (int) green, (int) blue);
-//}
+JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs(JNIEnv * env, jobject thisObject, jint red, jint green, jint blue) {
+    gpioPWM(GPIO_LED_RED, (int) red);
+    gpioPWM(GPIO_LED_GREEN, (int) green);
+    gpioPWM(GPIO_LED_BLUE, (int) blue);
+    printf("LEDs lighted - red %d, green %d, blue %d\n", (int) red, (int) green, (int) blue);
+}

@@ -101,7 +101,7 @@ public class MainPage extends FlexLayout {
             if(red.getValue() == null || green.getValue() == null || blue.getValue() == null) {
                 Notification.show("Nejsou zadané hodnoty!", 4000, Notification.Position.BOTTOM_CENTER);
             } else {
-                //peripheryService.lightLEDs(red.getValue(), green.getValue(), blue.getValue());
+                peripheryService.lightLEDs(red.getValue(), green.getValue(), blue.getValue());
             }
         });
         lightLEDsButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
