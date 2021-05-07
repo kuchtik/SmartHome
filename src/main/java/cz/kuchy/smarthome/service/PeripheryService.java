@@ -2,6 +2,9 @@ package cz.kuchy.smarthome.service;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Service
 public class PeripheryService {
 
@@ -11,18 +14,22 @@ public class PeripheryService {
 
 
     // ******************************************************************************** //
-    // ********************             Initialization             ******************** //
+    // ********************     Initialization and termination     ******************** //
     // ******************************************************************************** //
 
-    public native int initialise();
+    @PostConstruct
+    public native void initialise();
+
+    @PreDestroy
+    public native void terminate();
 
 
     // ******************************************************************************** //
     // ********************              DHT11 sensor              ******************** //
     // ******************************************************************************** //
 
-//    public native double readTemperature();
-//    public native double readHumidity();
+    public native double readTemperature();
+    public native double readHumidity();
 
 
     // ******************************************************************************** //
@@ -36,6 +43,6 @@ public class PeripheryService {
     // ********************               LED strip                ******************** //
     // ******************************************************************************** //
 
-//    public native void lightLEDs(int red, int green, int blue);
+    public native void lightLEDs(int red, int green, int blue);
 
 }
