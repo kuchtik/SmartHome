@@ -1,43 +1,71 @@
 package cz.kuchy.smarthome.service;
 
+import com.pi4j.Pi4J;
+import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalOutput;
+import com.pi4j.io.gpio.digital.DigitalOutputConfigBuilder;
+import com.pi4j.io.gpio.digital.DigitalState;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PeripheryService {
-
-    static {
-        System.loadLibrary("smarthome");
-        System.out.println("Loading native library finished");
-    }
 
 
     // ******************************************************************************** //
     // ********************     Initialisation and termination     ******************** //
     // ******************************************************************************** //
 
-    public native int initialise();
-    public native void terminate();
+    public void initialise() {
+
+    }
+
+    public void terminate() {
+
+    }
 
 
     // ******************************************************************************** //
     // ********************              DHT11 sensor              ******************** //
     // ******************************************************************************** //
 
-    public native double readTemperature();
-    public native double readHumidity();
+    public double readTemperature() {
+        return 0d;
+    }
+
+    public double readHumidity() {
+        return 0d;
+    }
 
 
     // ******************************************************************************** //
     // ********************       Piezo buzzer LD-BZEG-1203        ******************** //
     // ******************************************************************************** //
 
-    public native void makeSound(double duration);
+    public void makeSound(long duration) {
+        Context context = Pi4J.newAutoContext();
+        DigitalOutputConfigBuilder buzzerConfig = DigitalOutput.newConfigBuilder(context)
+                .id("led")
+                .name("LED Flasher")
+                .address(26)
+                .shutdown(DigitalState.LOW)
+                .initial(DigitalState.LOW)
+                .provider("pigpio-digital-output");
+        DigitalOutput buzzer = context.create(buzzerConfig);
+        buzzer.high();
+        try {
+            Thread.sleep(duration);
+        } catch(InterruptedException ignored) {}
+        buzzer.low();
+        context.shutdown();
+    }
 
 
     // ******************************************************************************** //
     // ********************               LED strip                ******************** //
     // ******************************************************************************** //
 
-    public native void lightLEDs(int red, int green, int blue);
+    public void lightLEDs(int red, int green, int blue) {
+
+    }
 
 }

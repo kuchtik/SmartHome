@@ -10,7 +10,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import cz.kuchy.smarthome.service.PeripheryService;
@@ -38,14 +37,11 @@ public class MainPage extends FlexLayout {
         setAlignSelf(Alignment.CENTER, header);
         add(header);
 
-        Button initialiseButton = new Button("Initialise", click -> {
-            int result = peripheryService.initialise();
-            Notification.show("Initialised with result " + result, 4000, Notification.Position.BOTTOM_CENTER);
-        });
+        Button initialiseButton = new Button("Initialise", click -> peripheryService.initialise());
         initialiseButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         add(initialiseButton);
 
-        Button terminateButton = new Button("Terminate", click -> Notification.show("Terminated", 4000, Notification.Position.BOTTOM_CENTER));
+        Button terminateButton = new Button("Terminate", click -> peripheryService.terminate());
         terminateButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         add(terminateButton);
 
@@ -54,23 +50,23 @@ public class MainPage extends FlexLayout {
     }
 
     private FlexLayout createSoundSection() {
-        NumberField soundDuration = new NumberField("Délka pípnutí");
-        soundDuration.setMin(0d);
-        soundDuration.setMax(10d);
+        IntegerField soundDuration = new IntegerField("Délka pípnutí");
+        soundDuration.setMin(0);
+        soundDuration.setMax(10000);
 
         Button plusDurationButton = new Button(new Icon(VaadinIcon.PLUS), click -> {
             if(soundDuration.getValue() == null) {
-                soundDuration.setValue(0d);
+                soundDuration.setValue(0);
             } else {
-                soundDuration.setValue(soundDuration.getValue() + .1);
+                soundDuration.setValue(soundDuration.getValue() + 100);
             }
         });
 
         Button minusDurationButton = new Button(new Icon(VaadinIcon.MINUS), click -> {
             if(soundDuration.getValue() == null) {
-                soundDuration.setValue(0d);
+                soundDuration.setValue(0);
             } else {
-                soundDuration.setValue(soundDuration.getValue() - .1);
+                soundDuration.setValue(soundDuration.getValue() - 100);
             }
         });
 
