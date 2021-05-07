@@ -35,15 +35,6 @@ JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_light
 JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise(JNIEnv * env, jobject thisObject) {
     int init = gpioInitialise();
     printf("GPIO initialised: %d\n", init);
-    if(init > 0) {
-        gpioSetMode(GPIO_LED_RED, PI_OUTPUT);
-        gpioSetMode(GPIO_LED_GREEN, PI_OUTPUT);
-        gpioSetMode(GPIO_LED_BLUE, PI_OUTPUT);
-//        gpioSetMode(GPIO_PUMP, PI_OUTPUT);
-//        gpioSetMode(GPIO_WATER_LEVEL, PI_INPUT);
-//        gpioSetMode(GPIO_MOISTURE, PI_INPUT);
-        gpioSetMode(GPIO_BUZZER, PI_OUTPUT);
-    }
 }
 
 JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate(JNIEnv * env, jobject thisObject) {
@@ -74,6 +65,7 @@ JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readH
 // ******************************************************************************** //
 
 JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSound(JNIEnv * env, jobject thisObject, jdouble duration) {
+    gpioSetMode(GPIO_BUZZER, PI_OUTPUT);
     gpioPWM(GPIO_BUZZER, 255);
     time_sleep((double) duration);
     gpioPWM(GPIO_BUZZER, 0);
@@ -86,6 +78,9 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSoun
 // ******************************************************************************** //
 
 JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_lightLEDs(JNIEnv * env, jobject thisObject, jint red, jint green, jint blue) {
+    gpioSetMode(GPIO_LED_RED, PI_OUTPUT);
+    gpioSetMode(GPIO_LED_GREEN, PI_OUTPUT);
+    gpioSetMode(GPIO_LED_BLUE, PI_OUTPUT);
     gpioPWM(GPIO_LED_RED, (int) red);
     gpioPWM(GPIO_LED_GREEN, (int) green);
     gpioPWM(GPIO_LED_BLUE, (int) blue);
