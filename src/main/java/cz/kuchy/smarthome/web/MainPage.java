@@ -40,8 +40,6 @@ public class MainPage extends FlexLayout {
 
         add(createSoundSection());
         add(createLedSection());
-
-        peripheryService.initialise();
     }
 
     private FlexLayout createSoundSection() {

@@ -39,9 +39,9 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initiali
         gpioSetMode(GPIO_LED_RED, PI_OUTPUT);
         gpioSetMode(GPIO_LED_GREEN, PI_OUTPUT);
         gpioSetMode(GPIO_LED_BLUE, PI_OUTPUT);
-        gpioSetMode(GPIO_PUMP, PI_OUTPUT);
-        gpioSetMode(GPIO_WATER_LEVEL, PI_INPUT);
-        gpioSetMode(GPIO_MOISTURE, PI_INPUT);
+//        gpioSetMode(GPIO_PUMP, PI_OUTPUT);
+//        gpioSetMode(GPIO_WATER_LEVEL, PI_INPUT);
+//        gpioSetMode(GPIO_MOISTURE, PI_INPUT);
         gpioSetMode(GPIO_BUZZER, PI_OUTPUT);
     }
 }
