@@ -18,12 +18,6 @@ public class PeripheryService {
 
     public native int initialise();
 
-    @PostConstruct
-    public void automaticInitialise() {
-        int result = initialise();
-        System.out.println("Initialisation result: " + result);
-    }
-
 
     // ******************************************************************************** //
     // ********************              DHT11 sensor              ******************** //
@@ -46,4 +40,10 @@ public class PeripheryService {
 
 //    public native void lightLEDs(int red, int green, int blue);
 
+
+    @PostConstruct
+    public void automaticInitialise() {
+        int result = initialise();
+        System.out.println("Initialisation result: " + result);
+    }
 }
