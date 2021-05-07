@@ -1,7 +1,6 @@
 package cz.kuchy.smarthome.web;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -12,14 +11,13 @@ import org.springframework.beans.factory.annotation.Configurable;
 
 @Route("")
 @Configurable
-public class MainPage extends Div {
+public class MainPage extends FlexLayout {
 
     @Autowired
     private PeripheryService peripheryService;
 
     public MainPage() {
-        FlexLayout flexLayout = new FlexLayout();
-        flexLayout.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+        setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 
         Button initialiseButton = new Button("Initialise");
         initialiseButton.addClickListener(click -> {
@@ -33,7 +31,7 @@ public class MainPage extends Div {
         Button makeSoundButton = new Button("Make sound");
         makeSoundButton.addClickListener(click -> peripheryService.makeSound(soundDuration.getValue()));
 
-        flexLayout.add(initialiseButton, soundDuration, makeSoundButton);
+        add(initialiseButton, soundDuration, makeSoundButton);
     }
 
 }
