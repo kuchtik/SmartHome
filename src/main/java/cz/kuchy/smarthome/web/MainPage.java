@@ -38,6 +38,17 @@ public class MainPage extends FlexLayout {
         setAlignSelf(Alignment.CENTER, header);
         add(header);
 
+        Button initialiseButton = new Button("Initialise", click -> {
+            int result = peripheryService.initialise();
+            Notification.show("Initialised with result " + result, 4000, Notification.Position.BOTTOM_CENTER);
+        });
+        initialiseButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        add(initialiseButton);
+
+        Button terminateButton = new Button("Terminate", click -> Notification.show("Terminated", 4000, Notification.Position.BOTTOM_CENTER));
+        terminateButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        add(terminateButton);
+
         add(createSoundSection());
         add(createLedSection());
     }
@@ -99,7 +110,7 @@ public class MainPage extends FlexLayout {
             if(red.getValue() == null || green.getValue() == null || blue.getValue() == null) {
                 Notification.show("Nejsou zadané hodnoty!", 4000, Notification.Position.BOTTOM_CENTER);
             } else {
-                //peripheryService.lightLEDs(red.getValue(), green.getValue(), blue.getValue());
+                peripheryService.lightLEDs(red.getValue(), green.getValue(), blue.getValue());
             }
         });
         lightLEDsButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
