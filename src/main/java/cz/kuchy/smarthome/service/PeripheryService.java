@@ -2,6 +2,8 @@ package cz.kuchy.smarthome.service;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class PeripheryService {
 
@@ -15,6 +17,12 @@ public class PeripheryService {
     // ******************************************************************************** //
 
     public native int initialise();
+
+    @PostConstruct
+    public void automaticInitialise() {
+        int result = initialise();
+        System.out.println("Initialisation result: " + result);
+    }
 
 
     // ******************************************************************************** //
