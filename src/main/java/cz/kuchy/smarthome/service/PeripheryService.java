@@ -17,11 +17,18 @@ public class PeripheryService {
     // ********************     Initialization and termination     ******************** //
     // ******************************************************************************** //
 
-    @PostConstruct
     public native void initialise();
+    public native void terminate();
+
+    @PostConstruct
+    public void automaticInitialise() {
+        initialise();
+    }
 
     @PreDestroy
-    public native void terminate();
+    public void automaticTerminate() {
+        terminate();
+    }
 
 
     // ******************************************************************************** //
