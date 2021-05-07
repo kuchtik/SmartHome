@@ -55,7 +55,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=jenkins
-ExecStart=/usr/bin/java -jar /opt/smart_home/smarthome.jar
+ExecStart=/usr/bin/java -Djava.library.path=/opt/smart_home -jar /opt/smart_home/smarthome.jar
 
 [Install]
 WantedBy=multi-user.target
@@ -65,3 +65,6 @@ sudo systemctl enable smarthome
 sudo nano /etc/sudoers
 
 jenkins ALL=(ALL) NOPASSWD: ALL
+
+
+sudo apt install pigpio
