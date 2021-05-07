@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initialise     (JNIEnv * env, jobject thisObject);
-//JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate      (JNIEnv * env, jobject thisObject);
+JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate      (JNIEnv * env, jobject thisObject);
 //JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readTemperature(JNIEnv * env, jobject thisObject);
 //JNIEXPORT jdouble JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_readHumidity   (JNIEnv * env, jobject thisObject);
 JNIEXPORT void    JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_makeSound      (JNIEnv * env, jobject thisObject, jdouble duration);
@@ -45,11 +45,11 @@ JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_initiali
         gpioSetMode(GPIO_BUZZER, PI_OUTPUT);
     }
 }
-//
-//JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate(JNIEnv * env, jobject thisObject) {
-//    gpioTerminate();
-//    printf("GPIO terminated\n");
-//}
+
+JNIEXPORT void JNICALL Java_cz_kuchy_smarthome_service_PeripheryService_terminate(JNIEnv * env, jobject thisObject) {
+    gpioTerminate();
+    printf("GPIO terminated\n");
+}
 
 
 // ******************************************************************************** //

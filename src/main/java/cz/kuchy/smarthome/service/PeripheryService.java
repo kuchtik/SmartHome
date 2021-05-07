@@ -2,6 +2,9 @@ package cz.kuchy.smarthome.service;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 @Service
 public class PeripheryService {
 
@@ -16,19 +19,19 @@ public class PeripheryService {
     // ******************************************************************************** //
 
     public native void initialise();
-//    public native void terminate();
-//
-//    @PostConstruct
-//    public void automaticInitialise() {
-//        initialise();
-//        System.out.println("Initialisation finished");
-//    }
-//
-//    @PreDestroy
-//    public void automaticTerminate() {
-//        terminate();
-//        System.out.println("Termination finished");
-//    }
+    public native void terminate();
+
+    @PostConstruct
+    public void automaticInitialise() {
+        initialise();
+        System.out.println("Initialisation finished");
+    }
+
+    @PreDestroy
+    public void automaticTerminate() {
+        terminate();
+        System.out.println("Termination finished");
+    }
 
 
     // ******************************************************************************** //

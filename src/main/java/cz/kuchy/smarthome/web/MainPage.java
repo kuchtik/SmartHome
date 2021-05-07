@@ -1,5 +1,6 @@
 package cz.kuchy.smarthome.web;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -26,7 +27,10 @@ public class MainPage extends FlexLayout {
     private PeripheryService peripheryService;
 
 
-    public MainPage() {
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+
         setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         setAlignItems(Alignment.START);
 
@@ -39,7 +43,6 @@ public class MainPage extends FlexLayout {
 
         peripheryService.initialise();
     }
-
 
     private FlexLayout createSoundSection() {
         NumberField soundDuration = new NumberField("Délka pípnutí");
