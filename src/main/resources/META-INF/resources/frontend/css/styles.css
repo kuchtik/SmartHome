@@ -1,11 +1,13 @@
-div[display=flex] > * {
-    margin: .4em;
-}
-
 .body {
     padding: 1em;
 }
 
-.body {
-    background-color: #0000FF;
+h1, h2, h3, h4, h5 {
+    margin-top: 1.6em;
+    margin-bottom: 1em;
+}
+
+vaadin-button, vaadin-integer-field {
+    margin-left: 0.4em;
+    margin-right: 0.4em;
 }

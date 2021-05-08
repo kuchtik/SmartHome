@@ -4,8 +4,8 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Route("")
 @PageTitle("Chytrá domácnost")
 @CssImport("./css/styles.css")
-@StyleSheet("css/styles.css")
 public class MainPage extends FlexLayout {
 
     @Autowired
@@ -34,22 +33,26 @@ public class MainPage extends FlexLayout {
         addClassName("body");
 
         setFlexDirection(FlexLayout.FlexDirection.COLUMN);
-        setAlignItems(Alignment.START);
+        setAlignItems(Alignment.CENTER);
 
-        H1 header = new H1("Chytrá domácnost");
-        setAlignSelf(Alignment.CENTER, header);
-        add(header);
+//        Button initialiseButton = new Button("Initialise", click -> peripheryService.initialise());
+//        initialiseButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+//        add(initialiseButton);
+//
+//        Button terminateButton = new Button("Terminate", click -> peripheryService.terminate());
+//        terminateButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+//        add(terminateButton);
 
-        Button initialiseButton = new Button("Initialise", click -> peripheryService.initialise());
-        initialiseButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        add(initialiseButton);
+        add(new H1("Chytrá domácnost"));
 
-        Button terminateButton = new Button("Terminate", click -> peripheryService.terminate());
-        terminateButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        add(terminateButton);
-
+        add(new H2("Bzučák"));
         add(createSoundSection());
+
+        add(new H2("LED diody"));
         add(createLedSection());
+
+        add(new H2("Automatické zalévání"));
+        add(createPumpSection());
     }
 
     private FlexLayout createSoundSection() {
@@ -90,31 +93,42 @@ public class MainPage extends FlexLayout {
 
 
     private FlexLayout createLedSection() {
-        IntegerField red = new IntegerField("Červená");
-        red.setValue(0);
-        red.setMin(0);
-        red.setMax(255);
-
-        IntegerField green = new IntegerField("Zelená");
-        green.setValue(0);
-        green.setMin(0);
-        green.setMax(255);
-
-        IntegerField blue = new IntegerField("Modrá");
-        blue.setValue(0);
-        blue.setMin(0);
-        blue.setMax(255);
-
-        Button lightLEDsButton = new Button("Rozsviť", click -> {
-            if(red.getValue() == null || green.getValue() == null || blue.getValue() == null) {
-                Notification.show("Nejsou zadané hodnoty!", 4000, Notification.Position.BOTTOM_CENTER);
-            } else {
-                peripheryService.lightLEDs(red.getValue(), green.getValue(), blue.getValue());
-            }
+        Button red = new Button(peripheryService.isRedLighting() ? "Zhasni červenou" : "Rozsviť červenou", click -> {
+            boolean lighting = peripheryService.isRedLighting();
+            peripheryService.lightRed(!lighting);
+            click.getSource().setText(!lighting ? "Zhasni červenou" : "Rozsviť červenou");
         });
-        lightLEDsButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        red.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        red.getElement().getStyle().set("background-color", "#ffa4a4");
 
-        FlexLayout ledRow = new FlexLayout(red, green, blue, lightLEDsButton);
+        Button green = new Button(peripheryService.isGreenLighting() ? "Zhasni zelenou" : "Rozsviť zelenou", click -> {
+            boolean lighting = peripheryService.isGreenLighting();
+            peripheryService.lightRed(!lighting);
+            click.getSource().setText(!lighting ? "Zhasni zelenou" : "Rozsviť zelenou");
+        });
+        green.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        green.getElement().getStyle().set("background-color", "#a4ffb6");
+
+        Button blue = new Button(peripheryService.isBlueLighting() ? "Zhasni modrou" : "Rozsviť modrou", click -> {
+            boolean lighting = peripheryService.isBlueLighting();
+            peripheryService.lightRed(!lighting);
+            click.getSource().setText(!lighting ? "Zhasni modrou" : "Rozsviť modrou");
+        });
+        blue.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        blue.getElement().getStyle().set("background-color", "#a4d3ff");
+
+        FlexLayout ledRow = new FlexLayout(red, green, blue);
+        ledRow.setFlexDirection(FlexDirection.ROW);
+        ledRow.setAlignItems(Alignment.BASELINE);
+        return ledRow;
+    }
+
+
+    private FlexLayout createPumpSection() {
+        Button pump = new Button("Spustit zalévání", click -> peripheryService.pumpWater());
+        pump.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+
+        FlexLayout ledRow = new FlexLayout(pump);
         ledRow.setFlexDirection(FlexDirection.ROW);
         ledRow.setAlignItems(Alignment.BASELINE);
         return ledRow;

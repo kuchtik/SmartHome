@@ -18,6 +18,7 @@ public class PeripheryService {
     private DigitalOutput ledRed;
     private DigitalOutput ledGreen;
     private DigitalOutput ledBlue;
+    private DigitalOutput pump;
 
 
     @PostConstruct
@@ -59,6 +60,15 @@ public class PeripheryService {
                 .initial(DigitalState.LOW)
                 .provider("pigpio-digital-output");
         ledBlue = context.create(ledBlueConfig);
+
+        DigitalOutputConfigBuilder pumpConfig = DigitalOutput.newConfigBuilder(context)
+                .id("pump")
+                .name("Pump")
+                .address(16)
+                .shutdown(DigitalState.LOW)
+                .initial(DigitalState.LOW)
+                .provider("pigpio-digital-output");
+        pump = context.create(pumpConfig);
     }
 
 
@@ -92,10 +102,40 @@ public class PeripheryService {
     }
 
 
-    public void lightLEDs(int red, int green, int blue) {
-        ledRed.setState(red);
-        ledGreen.setState(green);
-        ledBlue.setState(blue);
+    public void lightRed(boolean light) {
+        ledRed.state(light ? DigitalState.HIGH : DigitalState.LOW);
+    }
+
+
+    public void lightGreen(boolean light) {
+        ledGreen.state(light ? DigitalState.HIGH : DigitalState.LOW);
+    }
+
+
+    public void lightBlue(boolean light) {
+        ledBlue.state(light ? DigitalState.HIGH : DigitalState.LOW);
+    }
+
+
+    public boolean isRedLighting() {
+        return ledRed.state() == DigitalState.HIGH;
+    }
+
+
+    public boolean isGreenLighting() {
+        return ledGreen.state() == DigitalState.HIGH;
+    }
+
+
+    public boolean isBlueLighting() {
+        return ledBlue.state() == DigitalState.HIGH;
+    }
+
+
+    public void pumpWater() {
+        pump.high();
+        sleep(2000);
+        pump.low();
     }
 
 }
