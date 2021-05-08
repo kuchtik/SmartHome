@@ -1,0 +1,8 @@
+Kabel k zalévání:
+- hnědá - napájení senzor vlhkosti
+- šedá - zemění senzor vlhkosti
+- modrá - data senzor vlhkosti
+- žlutá - hladinový spínač
+- zelená - hladinový spínač
+- červená - napájení čerpadlo
+- bílá - zemění čerpadlo

@@ -4,6 +4,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Route("")
 @PageTitle("Chytrá domácnost")
 @CssImport("./css/styles.css")
+@StyleSheet("css/styles.css")
 public class MainPage extends FlexLayout {
 
     @Autowired
@@ -29,6 +31,7 @@ public class MainPage extends FlexLayout {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+        addClassName("body");
 
         setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         setAlignItems(Alignment.START);
