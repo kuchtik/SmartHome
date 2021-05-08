@@ -134,7 +134,7 @@ public class PeripheryService {
 
     public void pumpWater() {
         pump.high();
-        sleep(2000);
+        sleep(3000);
         pump.low();
     }
 

@@ -57,6 +57,7 @@ public class MainPage extends FlexLayout {
 
     private FlexLayout createSoundSection() {
         IntegerField soundDuration = new IntegerField("Délka pípnutí");
+        soundDuration.setValue(1000);
         soundDuration.setMin(0);
         soundDuration.setMax(10000);
 
@@ -79,6 +80,8 @@ public class MainPage extends FlexLayout {
         Button makeSoundButton = new Button("Pípni", click -> {
             if(soundDuration.getValue() == null) {
                 Notification.show("Není zadaný čas!", 4000, Notification.Position.BOTTOM_CENTER);
+            } else if(soundDuration.getValue() < 0) {
+                Notification.show("Čas nesmí být záporná hodnota!", 4000, Notification.Position.BOTTOM_CENTER);
             } else {
                 peripheryService.makeSound(soundDuration.getValue());
             }
@@ -103,7 +106,7 @@ public class MainPage extends FlexLayout {
 
         Button green = new Button(peripheryService.isGreenLighting() ? "Zhasni zelenou" : "Rozsviť zelenou", click -> {
             boolean lighting = peripheryService.isGreenLighting();
-            peripheryService.lightRed(!lighting);
+            peripheryService.lightGreen(!lighting);
             click.getSource().setText(!lighting ? "Zhasni zelenou" : "Rozsviť zelenou");
         });
         green.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
@@ -111,7 +114,7 @@ public class MainPage extends FlexLayout {
 
         Button blue = new Button(peripheryService.isBlueLighting() ? "Zhasni modrou" : "Rozsviť modrou", click -> {
             boolean lighting = peripheryService.isBlueLighting();
-            peripheryService.lightRed(!lighting);
+            peripheryService.lightBlue(!lighting);
             click.getSource().setText(!lighting ? "Zhasni modrou" : "Rozsviť modrou");
         });
         blue.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
