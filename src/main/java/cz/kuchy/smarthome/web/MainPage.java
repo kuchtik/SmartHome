@@ -1,6 +1,7 @@
 package cz.kuchy.smarthome.web;
 
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -17,6 +18,9 @@ import com.vaadin.flow.router.Route;
 import cz.kuchy.smarthome.service.PeripheryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Configurable
 @Route("")
@@ -35,14 +39,6 @@ public class MainPage extends FlexLayout {
 
         setFlexDirection(FlexLayout.FlexDirection.COLUMN);
         setAlignItems(Alignment.CENTER);
-
-//        Button initialiseButton = new Button("Initialise", click -> peripheryService.initialise());
-//        initialiseButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-//        add(initialiseButton);
-//
-//        Button terminateButton = new Button("Terminate", click -> peripheryService.terminate());
-//        terminateButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-//        add(terminateButton);
 
         add(new H1("Chytrá domácnost"));
 
@@ -87,12 +83,8 @@ public class MainPage extends FlexLayout {
                 peripheryService.makeSound(soundDuration.getValue());
             }
         });
-        makeSoundButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        FlexLayout soundRow = new FlexLayout(soundDuration, plusDurationButton, minusDurationButton, makeSoundButton);
-        soundRow.setFlexDirection(FlexDirection.ROW);
-        soundRow.setAlignItems(Alignment.BASELINE);
-        return soundRow;
+        return createFlexLayout(FlexDirection.ROW, Alignment.BASELINE, soundDuration, plusDurationButton, minusDurationButton, makeSoundButton);
     }
 
 
@@ -103,7 +95,7 @@ public class MainPage extends FlexLayout {
             click.getSource().setText(!lighting ? "Zhasni červenou" : "Rozsviť červenou");
         });
         red.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        red.getElement().getStyle().set("background-color", "#ffa4a4");
+        red.getElement().getStyle().set("background-color", "#ffbbbb");
 
         Button green = new Button(peripheryService.isGreenLighting() ? "Zhasni zelenou" : "Rozsviť zelenou", click -> {
             boolean lighting = peripheryService.isGreenLighting();
@@ -121,24 +113,35 @@ public class MainPage extends FlexLayout {
         blue.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         blue.getElement().getStyle().set("background-color", "#a4d3ff");
 
-        FlexLayout ledRow = new FlexLayout(red, green, blue);
-        ledRow.setFlexDirection(FlexDirection.ROW);
-        ledRow.setAlignItems(Alignment.BASELINE);
-        return ledRow;
+        return createFlexLayout(FlexDirection.ROW, Alignment.BASELINE, red, green, blue);
     }
 
 
     private FlexLayout createPumpSection() {
-        Paragraph waterLevelInfo = new Paragraph("Voda v nádrži: " + peripheryService.getWaterLevelSensorValue());
+        Paragraph waterLevelInfo = new Paragraph("Voda v nádrži: " + (peripheryService.isWaterInBarrel() ? "ano" : "ne"));
         Paragraph soilMoistureInfo = new Paragraph("Vlhkost půdy: " + peripheryService.getSoilMoistureSensorValue());
+        Paragraph nextWateringInfo = new Paragraph("Příští automatické zalévání: " + peripheryService.getNextAutomaticWateringTime().format(
+                DateTimeFormatter.ofPattern("E d. M. yyyy HH:mm", new Locale("cs"))));
 
-        Button pump = new Button("Spustit zalévání manuálně", click -> peripheryService.pumpWater());
-        pump.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        Button pump = new Button("Spustit zalévání manuálně", click -> {
+            if(peripheryService.isWaterInBarrel()) {
+                peripheryService.pumpWater();
+            } else {
+                Notification.show("V nádrži není voda, doplň!", 4000, Notification.Position.BOTTOM_CENTER);
+            }
+        });
 
-        FlexLayout ledSection = new FlexLayout(waterLevelInfo, soilMoistureInfo, pump);
-        ledSection.setFlexDirection(FlexDirection.COLUMN);
-        ledSection.setAlignItems(Alignment.CENTER);
-        return ledSection;
+        return createFlexLayout(FlexDirection.COLUMN, Alignment.CENTER, waterLevelInfo, soilMoistureInfo, nextWateringInfo, pump);
+    }
+
+
+    private FlexLayout createFlexLayout(FlexDirection flexDirection, Alignment alignItems, Component... children) {
+        FlexLayout flexLayout = new FlexLayout(children);
+        flexLayout.setFlexDirection(flexDirection);
+        flexLayout.setAlignItems(alignItems);
+        flexLayout.setFlexWrap(FlexWrap.WRAP);
+        flexLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        return flexLayout;
     }
 
 }

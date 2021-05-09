@@ -3,13 +3,19 @@ package cz.kuchy.smarthome.service;
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.support.CronExpression;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.time.LocalDateTime;
 
 @Service
 public class PeripheryService {
+
+    private static final String CRON_WATER_CHECK = "0 0 9-21 ? * * *";
+    private static final String CRON_WATERING = "0 0 9-21 ? * * *";
 
     private Context context;
     private DigitalOutput buzzer;
@@ -94,6 +100,29 @@ public class PeripheryService {
     }
 
 
+    @Scheduled(cron = CRON_WATER_CHECK)
+    public void automaticWaterLevelCheck() {
+        if(!isWaterInBarrel()) {
+            makeSound(500);
+            sleep(300);
+            makeSound(500);
+            sleep(300);
+            makeSound(500);
+        }
+    }
+
+
+    @Scheduled(cron = CRON_WATERING)
+    public void automaticWatering() {
+        if(isWaterInBarrel()) {
+            for(int i = 0; i < 4; i++) {
+                pumpWater();
+                sleep(30000);
+            }
+        }
+    }
+
+
     public void sleep(long duration) {
         try {
             Thread.sleep(duration);
@@ -155,13 +184,19 @@ public class PeripheryService {
     }
 
 
-    public DigitalState getWaterLevelSensorValue() {
-        return waterLevelSensor.state();
+    public boolean isWaterInBarrel() {
+        return waterLevelSensor.state() == DigitalState.LOW;
     }
 
 
     public DigitalState getSoilMoistureSensorValue() {
         return soilMoistureSensor.state();
+    }
+
+
+    public LocalDateTime getNextAutomaticWateringTime() {
+        CronExpression cronTrigger = CronExpression.parse(CRON_WATERING);
+        return cronTrigger.next(LocalDateTime.now());
     }
 
 }
