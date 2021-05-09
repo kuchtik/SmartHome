@@ -74,17 +74,17 @@ public class PeripheryService {
                 .id("water_level")
                 .name("Water level sensor")
                 .address(25)
-                .pull(PullResistance.PULL_DOWN)
+                .pull(PullResistance.OFF)
                 .provider("pigpio-digital-input");
-        waterLevelSensor = context.din().create(waterLevelConfig);
+        waterLevelSensor = context.create(waterLevelConfig);
 
         DigitalInputConfigBuilder soilMoistureConfig = DigitalInput.newConfigBuilder(context)
                 .id("soil_moisture")
                 .name("Soil moisture sensor")
                 .address(24)
-                .pull(PullResistance.PULL_DOWN)
+                .pull(PullResistance.OFF)
                 .provider("pigpio-digital-input");
-        soilMoistureSensor = context.din().create(soilMoistureConfig);
+        soilMoistureSensor = context.create(soilMoistureConfig);
     }
 
 
