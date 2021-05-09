@@ -19,6 +19,7 @@ import cz.kuchy.smarthome.service.PeripheryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -41,6 +42,10 @@ public class MainPage extends FlexLayout {
         setAlignItems(Alignment.CENTER);
 
         add(new H1("Chytrá domácnost"));
+        Paragraph timeInfo = new Paragraph("Čas: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE d. M. yyyy HH:mm", new Locale("cs"))));
+        Paragraph temperatureInfo = new Paragraph(String.format("Teplota uvnitř: %1f", peripheryService.getTemperature()));
+        Paragraph humidityInfo = new Paragraph(String.format("Vlhkost uvnitř: %1f", peripheryService.getHumidity()));
+        add(timeInfo, temperatureInfo, humidityInfo);
 
         add(new H2("Bzučák"));
         add(createSoundSection());
@@ -121,7 +126,7 @@ public class MainPage extends FlexLayout {
         Paragraph waterLevelInfo = new Paragraph("Voda v nádrži: " + (peripheryService.isWaterInBarrel() ? "ano" : "ne"));
         Paragraph soilMoistureInfo = new Paragraph("Vlhkost půdy: " + peripheryService.getSoilMoistureSensorValue());
         Paragraph nextWateringInfo = new Paragraph("Příští automatické zalévání: " + peripheryService.getNextAutomaticWateringTime().format(
-                DateTimeFormatter.ofPattern("E d. M. yyyy HH:mm", new Locale("cs"))));
+                DateTimeFormatter.ofPattern("EEEE d. M. yyyy HH:mm", new Locale("cs"))));
 
         Button pump = new Button("Spustit zalévání manuálně", click -> {
             if(peripheryService.isWaterInBarrel()) {
@@ -131,7 +136,7 @@ public class MainPage extends FlexLayout {
             }
         });
 
-        return createFlexLayout(FlexDirection.COLUMN, Alignment.CENTER, waterLevelInfo, soilMoistureInfo, nextWateringInfo, pump);
+        return createFlexLayout(FlexDirection.COLUMN, Alignment.CENTER, waterLevelInfo, nextWateringInfo, pump);
     }
 
 
