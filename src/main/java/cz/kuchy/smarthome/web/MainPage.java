@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -128,13 +129,15 @@ public class MainPage extends FlexLayout {
 
 
     private FlexLayout createPumpSection() {
+        Paragraph paragraph = new Paragraph("Voda v nádrži: " + (peripheryService.isWaterInBarrel() ? "ano" : "ne"));
+
         Button pump = new Button("Spustit zalévání", click -> peripheryService.pumpWater());
         pump.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        FlexLayout ledRow = new FlexLayout(pump);
-        ledRow.setFlexDirection(FlexDirection.ROW);
-        ledRow.setAlignItems(Alignment.BASELINE);
-        return ledRow;
+        FlexLayout ledSection = new FlexLayout(paragraph, pump);
+        ledSection.setFlexDirection(FlexDirection.COLUMN);
+        ledSection.setAlignItems(Alignment.CENTER);
+        return ledSection;
     }
 
 }

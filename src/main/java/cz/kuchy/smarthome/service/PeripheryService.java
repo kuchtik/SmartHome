@@ -2,9 +2,7 @@ package cz.kuchy.smarthome.service;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
-import com.pi4j.io.gpio.digital.DigitalOutput;
-import com.pi4j.io.gpio.digital.DigitalOutputConfigBuilder;
-import com.pi4j.io.gpio.digital.DigitalState;
+import com.pi4j.io.gpio.digital.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +17,7 @@ public class PeripheryService {
     private DigitalOutput ledGreen;
     private DigitalOutput ledBlue;
     private DigitalOutput pump;
+    private DigitalInput waterLevelSensor;
 
 
     @PostConstruct
@@ -69,6 +68,14 @@ public class PeripheryService {
                 .initial(DigitalState.LOW)
                 .provider("pigpio-digital-output");
         pump = context.create(pumpConfig);
+
+        DigitalInputConfigBuilder waterLevelConfig = DigitalInput.newConfigBuilder(context)
+                .id("water_level")
+                .name("Water level sensor")
+                .address(25)
+                .pull(PullResistance.PULL_DOWN)
+                .provider("pigpio-digital-input");
+        waterLevelSensor = context.din().create(waterLevelConfig);
     }
 
 
@@ -136,6 +143,11 @@ public class PeripheryService {
         pump.high();
         sleep(3000);
         pump.low();
+    }
+
+
+    public boolean isWaterInBarrel() {
+        return waterLevelSensor.state() == DigitalState.HIGH;
     }
 
 }
