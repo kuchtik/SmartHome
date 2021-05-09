@@ -18,6 +18,7 @@ public class PeripheryService {
     private DigitalOutput ledBlue;
     private DigitalOutput pump;
     private DigitalInput waterLevelSensor;
+    private DigitalInput soilMoistureSensor;
 
 
     @PostConstruct
@@ -76,6 +77,14 @@ public class PeripheryService {
                 .pull(PullResistance.PULL_DOWN)
                 .provider("pigpio-digital-input");
         waterLevelSensor = context.din().create(waterLevelConfig);
+
+        DigitalInputConfigBuilder soilMoistureConfig = DigitalInput.newConfigBuilder(context)
+                .id("soil_moisture")
+                .name("Soil moisture sensor")
+                .address(24)
+                .pull(PullResistance.PULL_DOWN)
+                .provider("pigpio-digital-input");
+        soilMoistureSensor = context.din().create(soilMoistureConfig);
     }
 
 
@@ -141,13 +150,18 @@ public class PeripheryService {
 
     public void pumpWater() {
         pump.high();
-        sleep(3000);
+        sleep(2500);
         pump.low();
     }
 
 
-    public boolean isWaterInBarrel() {
-        return waterLevelSensor.state() == DigitalState.HIGH;
+    public DigitalState getWaterLevelSensorValue() {
+        return waterLevelSensor.state();
+    }
+
+
+    public DigitalState getSoilMoistureSensorValue() {
+        return soilMoistureSensor.state();
     }
 
 }

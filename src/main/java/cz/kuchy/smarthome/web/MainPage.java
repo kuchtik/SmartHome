@@ -129,12 +129,13 @@ public class MainPage extends FlexLayout {
 
 
     private FlexLayout createPumpSection() {
-        Paragraph paragraph = new Paragraph("Voda v nádrži: " + (peripheryService.isWaterInBarrel() ? "ano" : "ne"));
+        Paragraph waterLevelInfo = new Paragraph("Voda v nádrži: " + peripheryService.getWaterLevelSensorValue());
+        Paragraph soilMoistureInfo = new Paragraph("Vlhkost půdy: " + peripheryService.getSoilMoistureSensorValue());
 
-        Button pump = new Button("Spustit zalévání", click -> peripheryService.pumpWater());
+        Button pump = new Button("Spustit zalévání manuálně", click -> peripheryService.pumpWater());
         pump.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
 
-        FlexLayout ledSection = new FlexLayout(paragraph, pump);
+        FlexLayout ledSection = new FlexLayout(waterLevelInfo, soilMoistureInfo, pump);
         ledSection.setFlexDirection(FlexDirection.COLUMN);
         ledSection.setAlignItems(Alignment.CENTER);
         return ledSection;
