@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Service
 public class PeripheryService {
 
-    private static final String CRON_WATER_CHECK = "0 0 9-21 ? * * *";
-    private static final String CRON_WATERING = "0 0 9 ? * MON *";
+    private static final String CRON_WATER_CHECK = "0 0 9-21 ? * *";
+    private static final String CRON_WATERING = "0 0 9 ? * MON";
 
     private Context context;
     private DigitalOutput buzzer;
