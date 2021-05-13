@@ -103,11 +103,11 @@ public class PeripheryService {
     @Scheduled(cron = CRON_WATER_CHECK)
     public void automaticWaterLevelCheck() {
         if(!isWaterInBarrel()) {
-            makeSound(500);
+            makeSound(400);
             sleep(300);
-            makeSound(500);
+            makeSound(400);
             sleep(300);
-            makeSound(500);
+            makeSound(400);
         }
     }
 
@@ -117,7 +117,7 @@ public class PeripheryService {
         if(isWaterInBarrel()) {
             for(int i = 0; i < 4; i++) {
                 pumpWater();
-                sleep(30000);
+                sleep(60000);
             }
         }
     }
@@ -127,16 +127,6 @@ public class PeripheryService {
         try {
             Thread.sleep(duration);
         } catch(InterruptedException ignored) {}
-    }
-
-
-    public double readTemperature() {
-        return 0d;
-    }
-
-
-    public double readHumidity() {
-        return 0d;
     }
 
 
@@ -197,16 +187,6 @@ public class PeripheryService {
     public LocalDateTime getNextAutomaticWateringTime() {
         CronExpression cronTrigger = CronExpression.parse(CRON_WATERING);
         return cronTrigger.next(LocalDateTime.now());
-    }
-
-
-    public double getTemperature() {
-        return 0;
-    }
-
-
-    public double getHumidity() {
-        return 0;
     }
 
 }

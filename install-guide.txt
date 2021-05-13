@@ -5,7 +5,7 @@ Password: raspberry
 
 sudo raspi-config
 
-Set WiFi, password, SSH, hostname, expand drive...
+Set timezone, WiFi, password, SSH, hostname, expand drive...
 
 sudo nano /etc/dhcpcd.conf
 

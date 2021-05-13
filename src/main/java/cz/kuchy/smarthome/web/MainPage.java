@@ -43,9 +43,7 @@ public class MainPage extends FlexLayout {
 
         add(new H1("Chytrá domácnost"));
         Paragraph timeInfo = new Paragraph("Čas: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE d. M. yyyy HH:mm", new Locale("cs"))));
-        Paragraph temperatureInfo = new Paragraph(String.format("Teplota uvnitř: %1f", peripheryService.getTemperature()));
-        Paragraph humidityInfo = new Paragraph(String.format("Vlhkost uvnitř: %1f", peripheryService.getHumidity()));
-        add(timeInfo, temperatureInfo, humidityInfo);
+        add(timeInfo);
 
         add(new H2("Bzučák"));
         add(createSoundSection());
