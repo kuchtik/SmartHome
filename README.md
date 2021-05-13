@@ -1,14 +1,13 @@
-# Chytrá domácnost
+# Chytra domacnost
 
-Tento projekt vznikl jako semestrální práce do předmětu NI-IOT na ČVUT v Praze.
+Tento projekt vznikl jako semestralni prace do predmetu NI-IOT na CVUT v Praze.
 
-V projektu bych chtěl vytvořit:
-- systém pro automatické zalévání květiny se senzorem vlhkosti půdy a senzorem hladiny vody v nádrži, aby se hlídalo, že voda došla
-- rozsvěcení a nastavování barvy pásu LED diod
-- měření teploty a vlhkosti vzduchu v pokoji
+V projektu bych chtel vytvorit:
+- system pro automaticke zalevani kvetiny se senzorem vlhkosti pudy a senzorem hladiny vody v nadrzi, aby se hlidalo, ze voda dosla
+- rozsveceni a nastavovani barvy pasu LED diod
 
-Projekt bude postavený na zařízení Raspberry Pi 3B. Na zařízení poběží webový server, který bude zobrazovat informace a bude z něj možné ovládat připojené součástky. Server i ovládání bude napsaný v Javě.
+Projekt bude postaveny na zarizeni Raspberry Pi 3B. Na zarizeni pobezi webovy server, ktery bude zobrazovat informace a bude z nej mozne ovladat pripojene soucastky. Server i ovladani bude napsany v Jave.
 
-Schéma zapojení součástek do Raspberry:
+Schema zapojeni soucastek do Raspberry:
 
-![alt text](https://github.com/kuchtik/SmartHome/blob/master/circuit_described.png)
+![Schema zapojeni](circuit.png)

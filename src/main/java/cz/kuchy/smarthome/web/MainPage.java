@@ -42,7 +42,7 @@ public class MainPage extends FlexLayout {
         setAlignItems(Alignment.CENTER);
 
         add(new H1("Chytrá domácnost"));
-        Paragraph timeInfo = new Paragraph("Čas: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE d. M. yyyy HH:mm", new Locale("cs"))));
+        Paragraph timeInfo = new Paragraph(LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE d. M. yyyy HH:mm", new Locale("cs"))));
         add(timeInfo);
 
         add(new H2("Bzučák"));
